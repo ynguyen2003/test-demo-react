@@ -1,29 +1,43 @@
 import React from "react";
+import AddUserInfor from "./AddUserInfor";
+import DisplayInfor from "./DisplayInfor";
 
 class MyComponent extends React.Component {
-
     state = {
-        name: "Nhu Y",
-        age: 22,
-        address: "HCM"
+        listUserinfor: [
+            { id: 1, name: "Nhu Y", age: "21" },
+            { id: 2, name: "Zera", age: "23" },
+            { id: 3, name: "ZeraNguyenDev", age: "25" },
+        ]
     }
 
-    handleClick() {
-        console.log(">>> check me my button")
-        console.log(">>> my name is ", this.state.name)
+    handleAddNewUser = (userOjb) => {
+
+        this.setState({
+            listUserinfor: [userOjb, ...this.state.listUserinfor]
+        })
     }
 
-    handleMouseOver(envent) {
-        console.log(envent.pageX)
+    hanldeDeleteUser = (userId) => {
+        let listUserClone = this.state.listUserinfor;
+        listUserClone = listUserClone.filter(item => item.id !== userId);
+        this.setState({
+            listUserinfor: listUserClone
+        })
     }
 
     render() {
         return (
-            <div>
-                Toi Ten La {this.state.name} hien dang song o {this.state.address}
-                <button onMouseOver={this.handleMouseOver}>Hover me</button>
-                <button onClick={this.handleClick}>Click me</button>
-            </div>
+            <>
+                <AddUserInfor
+                    handleAddNewUser={this.handleAddNewUser}
+                />
+                <br></br>
+                <DisplayInfor
+                    listUserinfor={this.state.listUserinfor}
+                    hanldeDeleteUser={this.hanldeDeleteUser}
+                />
+            </>
         )
     }
 }
